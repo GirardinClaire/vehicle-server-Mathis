@@ -1,5 +1,8 @@
+IMAGE?=<VOTRE_USERNAME_DOCKERHUB>/vehicle-server
+TAG?=dev
+
 .PHONY: all
-all: clean dist build
+all: clean unit_test integration_test dist build package
 
 .PHONY: clean
 clean:
@@ -21,6 +24,10 @@ unit_test:
 .PHONY: integration_test
 integration_test:
 	go test -v -count=1 --tags=integration ./app
+
+.PHONY: package
+package:
+	docker build -t docker-static-debian:1.0.0 .
 
 
 DB_CONTAINER_NAME=vehicle-server-devgo
